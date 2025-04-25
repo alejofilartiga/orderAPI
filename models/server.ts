@@ -29,7 +29,7 @@ export class Server {
             res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Encabezados permitidos
             res.setHeader("Access-Control-Allow-Credentials", "true"); // Permitir envío de cookies si es necesario
             if (req.method === "OPTIONS") {
-                return res.sendStatus(204); // Respuesta exitosa para preflight
+                return res.status(204).end(); // Respuesta exitosa para preflight
             }
             next();
         });
