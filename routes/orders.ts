@@ -1,11 +1,19 @@
-import {Router} from "express"
+import { Router } from "express";
+import { createOrder } from "../controllers/orders";
+import { pathToRegexp } from "path-to-regexp";
 
-import { createOrder } from "../controllers/orders"
+const router = Router();
 
+// Define una ruta dinámica como ejemplo
+const dynamicRoute = pathToRegexp("/orders/:id");
 
-const router = Router ();
-
-
+// Ruta para crear una orden
 router.post("/", createOrder);
 
-export default router
+// Ruta dinámica de ejemplo (puedes reemplazarla con tu lógica)
+router.get(dynamicRoute, (req, res) => {
+    const { id } = req.params;
+    res.status(200).json({ message: `Ruta dinámica con ID: ${id}` });
+});
+
+export default router;
