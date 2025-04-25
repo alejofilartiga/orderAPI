@@ -1,18 +1,24 @@
-import { Request, Response } from "express";
-import Order, { IOrder } from "../models/orders";
+import {Request, Response} from "express"
 
-export const createOrder = async (req: Request, res: Response): Promise<void> => {
-    const orderData: IOrder = req.body;
+import Order, {IOrder} from "../models/orders"
+
+
+export const createOrder = async (req:Request, res: Response) : Promise <void>  => {
+
+
+    const orderData:IOrder = req.body
+
+    
 
     const data = {
         ...orderData,
         createdAt: new Date(),
         status: "pending"
-    };
+    }
 
-    const order = new Order(data);
+    const order = new Order (data)
 
-    await order.save(); // Asegúrate de usar `await` para guardar correctamente en la base de datos
+    order.save()
 
-    res.status(201).json("Orden Confirmada");
-};
+    res.status(201).json("Orden Confirmada")
+}
