@@ -29,7 +29,7 @@ export class Server {
             res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Encabezados permitidos
             res.setHeader("Access-Control-Allow-Credentials", "true"); // Permitir envío de cookies si es necesario
             if (req.method === "OPTIONS") {
-                res.status(200).end(); // Respuesta exitosa para preflight con estado HTTP 200
+                res.status(204).end(); // Respuesta exitosa para preflight con estado HTTP 204
                 return;
             }
             next();
@@ -40,7 +40,7 @@ export class Server {
         // Middleware para manejar errores y asegurarse de que los encabezados CORS estén presentes
         this.app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
             console.error("Error en el servidor:", err);
-            res.setHeader("Access-Control-Allow-Origin", "https://campitoshop.vercel.app");
+            res.setHeader("Access-Control-Allow-Origin", "https://campitoshop.vercel.app/*");
             res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
             res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
             res.setHeader("Access-Control-Allow-Credentials", "true");
