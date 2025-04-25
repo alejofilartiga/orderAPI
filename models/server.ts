@@ -1,55 +1,51 @@
-import express, { Express, Request, Response, NextFunction } from "express";
+import express, {Express} from "express";
+import cors from "cors";
 import { DBConnection } from "../db/config";
-import orderRoutes from "../routes/orders";
+import orderRoutes from "../routes/orders"
+
+const corsConfig = {
+    origin:"*",
+    methods: ["GET", "POST", "PATCH", "DELETE","OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    preflightContinue: false,
+    optionsSuccessStatus: 200,
+    credentials: true,
+    exposedHeaders: ["Content-Range", "X-Content-Range"]
+  }
 
 export class Server {
-    app: Express;
-    port: string | number | undefined;
-    ordersPath: string;
+    app: Express
+    port: string | number | undefined
+    ordersPath: string
 
-    constructor() {
-        this.app = express();
-        this.port = process.env.PORT;
-        this.ordersPath = "/orders";
+    constructor () {
+        this.app = express()
+        this.port = process.env.PORT
+        this.ordersPath = "/orders"
 
-        this.conectarDB();
-        this.middlewares();
-        this.routes();
+        this.conectarDB()
+        this.middlewares()
+        this.routes()
+        
     }
 
-    async conectarDB(): Promise<void> {
-        await DBConnection();
+
+    async conectarDB() : Promise <void> {
+        await DBConnection()
     }
 
     middlewares(): void {
-        // Middleware global para agregar encabezados CORS
-        this.app.use((req: Request, res: Response, next: NextFunction) => {
-            res.setHeader("Access-Control-Allow-Origin", "https://campitoshop.vercel.app"); // Permitir solicitudes desde este origen
-            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS"); // Métodos permitidos
-            res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Encabezados permitidos
-            res.setHeader("Access-Control-Allow-Credentials", "true"); // Permitir envío de cookies si es necesario
-            if (req.method === "OPTIONS") {
-                return res.status(204).end(); // Respuesta exitosa para preflight con estado HTTP 204
-            }
-            next();
-        });
-
+        this.app.use(cors(corsConfig));
         this.app.use(express.json());
-
-        // Middleware para manejar errores
-        this.app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-            console.error("Error en el servidor:", err);
-            res.status(500).json({ error: "Error interno del servidor" });
-        });
     }
 
-    routes(): void {
-        this.app.use(this.ordersPath, orderRoutes);
+    routes():void{
+        this.app.use(this.ordersPath, orderRoutes)
     }
 
-    listen(): void {
-        this.app.listen(this.port, () => {
-            console.log("Servidor en puerto", this.port);
-        });
+    listen () : void {
+        this.app.listen(this.port,()=>{
+            console.log("Servidor en puerto", this.port)
+        })
     }
 }
