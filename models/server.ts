@@ -25,7 +25,11 @@ export class Server {
     }
 
     middlewares(): void {
-        this.app.use(cors())
+        this.app.use(cors({
+            origin: "*",
+            methods:["POST"],
+            allowedHeaders:["Content-Type"]
+        }))
         this.app.use(express.json());
     }
 
