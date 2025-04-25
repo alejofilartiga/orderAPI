@@ -23,11 +23,14 @@ export class Server {
         await DBConnection()
     }
 
-    middlewares():void{
-        this.app.use(cors())
-        this.app.use(express.json())
+    middlewares(): void {
+        this.app.use(cors({
+            origin: "*", // Permitir solicitudes desde cualquier origen
+            methods: ["POST"], // Métodos permitidos
+            credentials: false // Deshabilitar envío de cookies
+        }));
+        this.app.use(express.json());
     }
-
 
     routes():void{
         this.app.use(this.ordersPath, orderRoutes)
