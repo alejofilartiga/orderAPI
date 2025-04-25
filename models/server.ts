@@ -5,8 +5,12 @@ import orderRoutes from "../routes/orders"
 
 const corsConfig = {
     origin:"*",
-    credential:true,
     methods: ["GET", "POST", "PATCH", "DELETE","OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    preflightContinue: false,
+    optionsSuccessStatus: 200,
+    credentials: true,
+    exposedHeaders: ["Content-Range", "X-Content-Range"]
   }
 
 export class Server {
@@ -22,7 +26,9 @@ export class Server {
         this.conectarDB()
         this.middlewares()
         this.routes()
+        this.app.options("*",cors(corsConfig))
     }
+
 
     async conectarDB() : Promise <void> {
         await DBConnection()
