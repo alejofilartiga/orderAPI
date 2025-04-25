@@ -1,7 +1,6 @@
 import express, {Express} from "express";
 import { DBConnection } from "../db/config";
 import orderRoutes from "../routes/orders"
-import cors from "cors"
 
 
 export class Server {
@@ -24,11 +23,6 @@ export class Server {
     }
 
     middlewares(): void {
-        this.app.use(cors({
-            origin: "https://campitoshop.vercel.app", 
-            methods: ["POST"], 
-            credentials: true 
-        }));
         this.app.use(express.json());
     }
 
