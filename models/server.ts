@@ -30,6 +30,10 @@ export class Server {
             allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
             credentials: true // Permitir envío de cookies si es necesario
         }));
+
+        // Manejar solicitudes preflight (OPTIONS)
+        this.app.options("*", cors());
+
         this.app.use(express.json());
     }
 
