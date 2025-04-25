@@ -25,10 +25,10 @@ export class Server {
 
     middlewares(): void {
         this.app.use(cors({
-            origin: "https://campitoshop.vercel.app", 
-            methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-            allowedHeaders: ["Content-Type", "Authorization"], 
-            credentials: true 
+            origin: "https://campitoshop.vercel.app", // Permitir solicitudes desde este origen
+            methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Métodos permitidos
+            allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
+            credentials: true // Permitir envío de cookies si es necesario
         }));
         this.app.use(express.json());
     }
