@@ -4,10 +4,11 @@ import { DBConnection } from "../db/config";
 import orderRoutes from "../routes/orders"
 
 const corsConfig = {
-    origin:"*",
-    credential:true,
-    methods: ["GET", "POST", "PATCH", "DELETE"],
-  }
+    origin: "*", // Permitir solicitudes desde cualquier origen
+    credentials: true, // Permitir envío de cookies si es necesario
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"], // Métodos permitidos
+    allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
+};
 
 export class Server {
     app: Express
@@ -29,7 +30,17 @@ export class Server {
     }
 
     middlewares(): void {
-        this.app.use(cors(corsConfig))
+        this.app.use(cors(corsConfig));
+
+        // Manejar solicitudes preflight (OPTIONS)
+        this.app.options("*", (req, res) => {
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
+            res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+            res.setHeader("Access-Control-Allow-Credentials", "true");
+            res.sendStatus(204); // Respuesta exitosa para preflight
+        });
+
         this.app.use(express.json());
     }
 
