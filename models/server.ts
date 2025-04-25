@@ -4,6 +4,7 @@ import { DBConnection } from "../db/config";
 import orderRoutes from "../routes/orders"
 
 
+
 export class Server {
     app: Express
     port: string | number | undefined
@@ -24,22 +25,7 @@ export class Server {
     }
 
     middlewares(): void {
-        this.app.use(cors({
-            origin: "https://campitoshop.vercel.app", // Permitir solicitudes desde este origen
-            methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Métodos permitidos
-            allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
-            credentials: true // Permitir envío de cookies si es necesario
-        }));
-
-        // Asegúrate de manejar las solicitudes preflight (OPTIONS)
-        this.app.options("*", (req, res) => {
-            res.setHeader("Access-Control-Allow-Origin", "https://campitoshop.vercel.app");
-            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-            res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-            res.setHeader("Access-Control-Allow-Credentials", "true");
-            res.sendStatus(204); // Respuesta exitosa para preflight
-        });
-
+        this.app.use(cors())
         this.app.use(express.json());
     }
 
