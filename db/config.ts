@@ -6,10 +6,7 @@ export const DBConnection = async (): Promise<void> => {
         if (!dbUrl) {
             throw new Error("La Url no esta definida en los .ENV");
         }
-        await mongoose.connect(dbUrl, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect(dbUrl);
         console.log("Database Online");
     } catch (error) {
         console.log(error);
