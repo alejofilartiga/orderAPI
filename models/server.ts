@@ -29,21 +29,16 @@ export class Server {
             res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Encabezados permitidos
             res.setHeader("Access-Control-Allow-Credentials", "true"); // Permitir envío de cookies si es necesario
             if (req.method === "OPTIONS") {
-                res.status(204).end(); // Respuesta exitosa para preflight con estado HTTP 204
-                return;
+                return res.status(204).end(); // Respuesta exitosa para preflight con estado HTTP 204
             }
             next();
         });
 
         this.app.use(express.json());
 
-        // Middleware para manejar errores y asegurarse de que los encabezados CORS estén presentes
+        // Middleware para manejar errores
         this.app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
             console.error("Error en el servidor:", err);
-            res.setHeader("Access-Control-Allow-Origin", "https://campitoshop.vercel.app/*");
-            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
-            res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-            res.setHeader("Access-Control-Allow-Credentials", "true");
             res.status(500).json({ error: "Error interno del servidor" });
         });
     }

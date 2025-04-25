@@ -17,6 +17,11 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
         res.status(201).json("Orden Confirmada");
     } catch (error) {
         console.error("Error al crear la orden:", error);
-        res.status(500).json({ error: "Error interno del servidor" });
+
+        if (error.name === "MongoServerError" || error.name === "MongooseError") {
+            res.status(500).json({ error: "Error al conectar con la base de datos" });
+        } else {
+            res.status(500).json({ error: "Error interno del servidor" });
+        }
     }
 };
