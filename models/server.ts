@@ -1,4 +1,5 @@
 import express, {Express} from "express";
+import cors from "cors";
 import { DBConnection } from "../db/config";
 import orderRoutes from "../routes/orders"
 
@@ -23,6 +24,12 @@ export class Server {
     }
 
     middlewares(): void {
+        this.app.use(cors({
+            origin: "*",
+            methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
+            allowedHeaders: ["Content-Type", "Authorization"], 
+            credentials: true 
+        }));
         this.app.use(express.json());
     }
 
