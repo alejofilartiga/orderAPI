@@ -3,7 +3,11 @@ import cors from "cors";
 import { DBConnection } from "../db/config";
 import orderRoutes from "../routes/orders"
 
-
+const corsConfig = {
+    origin:"*",
+    credential:true,
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+  }
 
 export class Server {
     app: Express
@@ -25,11 +29,7 @@ export class Server {
     }
 
     middlewares(): void {
-        this.app.use(cors({
-            origin: "*",
-            methods:["POST"],
-            allowedHeaders:["Content-Type"]
-        }))
+        this.app.use(cors(corsConfig))
         this.app.use(express.json());
     }
 
