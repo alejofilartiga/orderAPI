@@ -37,6 +37,9 @@ export class Server {
     middlewares(): void {
         this.app.use(cors(corsConfig));
         this.app.use(express.json());
+
+        // Manejo de solicitudes OPTIONS
+        this.app.options("*", cors(corsConfig));
     }
 
     routes():void{
