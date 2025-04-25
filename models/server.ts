@@ -25,9 +25,9 @@ export class Server {
 
     middlewares(): void {
         this.app.use(cors({
-            origin: "*", // Permitir solicitudes desde cualquier origen
-            methods: ["POST"], // Métodos permitidos
-            credentials: false // Deshabilitar envío de cookies
+            origin: "https://campitoshop.vercel.app", 
+            methods: ["POST"], 
+            credentials: true 
         }));
         this.app.use(express.json());
     }
