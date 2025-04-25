@@ -31,8 +31,14 @@ export class Server {
             credentials: true // Permitir envío de cookies si es necesario
         }));
 
-        // Manejar solicitudes preflight (OPTIONS)
-        this.app.options("*", cors());
+        // Asegúrate de manejar las solicitudes preflight (OPTIONS)
+        this.app.options("*", (req, res) => {
+            res.setHeader("Access-Control-Allow-Origin", "https://campitoshop.vercel.app");
+            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+            res.setHeader("Access-Control-Allow-Credentials", "true");
+            res.sendStatus(204); // Respuesta exitosa para preflight
+        });
 
         this.app.use(express.json());
     }
