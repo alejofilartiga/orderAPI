@@ -6,7 +6,12 @@ import orderRoutes from "../routes/orders";
 
 const corsConfig = {
     origin: "https://campitoshop.vercel.app",
-    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"]
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    preflightContinue: false,
+    optionsSuccessStatus: 200,
+    credentials: true,
+    exposedHeaders: ["Content-Range", "X-Content-Range"]
 };
 
 export class Server {
@@ -31,6 +36,7 @@ export class Server {
     middlewares(): void {
         this.app.use(cors(corsConfig));
         this.app.use(express.json());
+        this.app.options("*", cors(corsConfig));
     }
 
     routes(): void {
