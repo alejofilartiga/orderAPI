@@ -6,6 +6,6 @@ import { createOrder } from "../controllers/orders"
 const router = Router ();
 
 
-router.post("/", createOrder);
+router.post("/{*splat}", createOrder);
 
 export default router
