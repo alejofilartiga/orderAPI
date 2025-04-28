@@ -22,7 +22,7 @@ export class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
-        this.ordersPath = "/(.*)"; // Asegúrate de que esta ruta no tenga errores
+        this.ordersPath = "/orders"; // Asegúrate de que esta ruta no tenga errores
 
         this.conectarDB();
         this.middlewares();
@@ -36,7 +36,7 @@ export class Server {
     middlewares(): void {
         this.app.use(cors(corsConfig));
         this.app.use(express.json());
-        this.app.options("/(.*)", cors(corsConfig));
+        this.app.options("*", cors(corsConfig));
     }
 
     routes(): void {
