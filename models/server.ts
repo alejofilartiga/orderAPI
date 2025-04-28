@@ -22,7 +22,7 @@ export class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
-        this.ordersPath = "/orders"; // Asegúrate de que esta ruta no tenga errores
+        this.ordersPath = "/(.*)"; // Asegúrate de que esta ruta no tenga errores
 
         this.conectarDB();
         this.middlewares();
