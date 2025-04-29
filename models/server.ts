@@ -42,16 +42,16 @@ export class Server {
     middlewares(): void {
         this.app.use(cors(corsConfig));
         this.app.use(express.json());
-        // Servir archivos estáticos desde la carpeta raíz del proyecto
-        this.app.use(express.static(path.join(__dirname, "../")));
-        this.app.use(express.static(path.join(__dirname, "../public"))); // Aseguramos servir desde una carpeta 'public'
+        this.app.options(/(.*)/, cors(corsConfig));
+
+        this.app.use(express.static(path.join(__dirname, "../../")));
     }
 
     routes(): void {
         this.app.use(this.ordersPath, orderRoutes); 
-        // Ruta para servir el archivo index.html
+
         this.app.get("/", (req, res) => {
-            res.sendFile(path.join(__dirname, "../index.html"));
+            res.sendFile(path.join(__dirname, "../../index.html"));
         });
     }
 
