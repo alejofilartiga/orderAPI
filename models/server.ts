@@ -22,15 +22,20 @@ export class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
-        this.ordersPath = "/orders"; // Asegúrate de que esta ruta no tenga errores
+        this.ordersPath = "/orders"; 
 
-        this.conectarDB();
         this.middlewares();
         this.routes();
     }
 
     async conectarDB(): Promise<void> {
-        await DBConnection();
+        try {
+            await DBConnection();
+            console.log("Conexión a la base de datos exitosa");
+        } catch (error) {
+            console.error("Error al conectar a la base de datos:", error);
+            process.exit(1);
+        }
     }
 
     middlewares(): void {
@@ -40,12 +45,17 @@ export class Server {
     }
 
     routes(): void {
-        this.app.use(this.ordersPath, orderRoutes); // Verifica que `orderRoutes` esté correctamente definido
+        this.app.use(this.ordersPath, orderRoutes); 
     }
 
-    listen(): void {
-        this.app.listen(this.port, () => {
-            console.log("Servidor en puerto", this.port);
-        });
+    async listen(): Promise<void> {
+        try {
+            await this.conectarDB(); 
+            this.app.listen(this.port, () => {
+                console.log("Servidor en puerto", this.port);
+            });
+        } catch (error) {
+            console.error("Error al iniciar el servidor:", error);
+        }
     }
 }
