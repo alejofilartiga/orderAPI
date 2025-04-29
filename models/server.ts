@@ -44,6 +44,7 @@ export class Server {
         this.app.use(express.json());
         // Servir archivos estáticos desde la carpeta raíz del proyecto
         this.app.use(express.static(path.join(__dirname, "../")));
+        this.app.use(express.static(path.join(__dirname, "../public"))); // Aseguramos servir desde una carpeta 'public'
     }
 
     routes(): void {
