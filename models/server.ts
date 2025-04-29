@@ -44,14 +44,15 @@ export class Server {
         this.app.use(express.json());
         this.app.options(/(.*)/, cors(corsConfig));
 
-        this.app.use(express.static(path.join(__dirname, "../../")));
+      
+        this.app.use(express.static(path.join(__dirname, "../")));
     }
 
     routes(): void {
         this.app.use(this.ordersPath, orderRoutes); 
 
         this.app.get("/", (req, res) => {
-            res.sendFile(path.join(__dirname, "../../index.html"));
+            res.sendFile(path.join(__dirname, "../index.html"));
         });
     }
 
