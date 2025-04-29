@@ -8,6 +8,10 @@
     ],
     "routes": [
         {
+            "src": "/",
+            "dest": "/index.html"
+        },
+        {
             "src": "/(.*)",
             "headers": {
                 "Access-Control-Allow-Origin": "https://campitoshop.vercel.app",
